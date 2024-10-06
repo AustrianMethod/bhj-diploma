@@ -10,10 +10,10 @@ const createRequest = ( options ) => {
     const {
       url,
       data: {
-          email,
-          password,
-          name,
-        },
+        email,
+        password,
+        name,
+      },
     method,
     callback, //= ( err, response ) => {
     //       console.log( 'Ошибка:', err );
@@ -29,19 +29,22 @@ const createRequest = ( options ) => {
     xhr.responseType = 'json';
     xhr.onload = () => {
       if ( xhr.response.success ) {
-          callback( null, xhr.response );
+        callback( null, xhr.response );
       } else {
-          callback( xhr.response )
+        callback( xhr.response )
       }
     }
   
-    if ( method !== 'GET' ) {
+    if ( method === 'GET' ) {
+      xhr.open( 'GET', newURL );
+      xhr.send();
+    } else if ( method === 'POST' ) {
       formData.append( 'mail', email );
       formData.append( 'password', password );
       xhr.open( 'POST', newURL );
       xhr.send( formData );   
-    } else {
-      xhr.open( 'GET', newURL );
+    } else if ( method === 'DELETE' ) {
+      xhr.open( 'DELETE', newURL );
       xhr.send();
     }
   };
