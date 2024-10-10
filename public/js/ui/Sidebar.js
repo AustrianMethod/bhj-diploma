@@ -22,7 +22,8 @@ class Sidebar {
     const body = document.querySelector( '.sidebar-mini' );
     sidebarBtn.addEventListener( 'click', event => {
       event.preventDefault();
-      body.classList.toggle('sidebar-open sidebar-collapse')
+      body.classList.toggle('sidebar-open');
+      body.classList.toggle('sidebar-collapse'); 
     });
   }
 
@@ -34,6 +35,28 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+    const regBtn = document.querySelector('.menu-item_register');
+    const modalReg = App.getModal('register');
+    regBtn.onclick = (e) => {
+      e.preventDefault();
+      modalReg.open();
+    };
 
+    const loginBtn = document.querySelector('.menu-item_login');
+    const modalLogin = App.getModal('login');
+    loginBtn.onclick = (e) => {
+      e.preventDefault();
+      modalLogin.open();
+    };
+
+    const logoutBtn = document.querySelector('.menu-item_logout');
+    logoutBtn.onclick = (e) => {
+      e.preventDefault();
+      User.logout( (err, response) => {
+        if (response?.success === true) {
+          App.setState('init');
+        }
+      });
+    };
   }
 }

@@ -39,9 +39,9 @@ class User {
       url: this.URL + '/current',
       method: 'GET',
       callback: ( err, response ) => {
-        if (response.success === true) {
+        if (response?.success === true) {
           User.current();
-        } else if (response.success === false) {
+        } else if (response?.success === false) {
           User.unsetCurrent();
         }
         callback(err, response);
@@ -59,7 +59,6 @@ class User {
     createRequest({
       url: this.URL + '/login',
       method: 'POST',
-      responseType: 'json',
       data,
       callback: (err, response) => {
         if (response && response.user) {

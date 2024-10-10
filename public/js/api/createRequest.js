@@ -2,28 +2,21 @@
  * Основная функция для совершения запросов
  * на сервер.
  * */
-/**
- * Основная функция для совершения запросов
- * на сервер.
- * */
 const createRequest = ( options ) => {
     const {
-      url,
-      data: {
-        email,
-        password,
-        name,
-      },
+    url,
     method,
-    callback, //= ( err, response ) => {
+    callback,
+    data: {
+      email,
+      password,
+    } = {},
+    
+    //= ( err, response ) => {
     //       console.log( 'Ошибка:', err );
     //       console.log( 'Данные:', response );
     //   }, 
     } = options;
-  
-    const encodedEmail = encodeURIComponent( email );
-    const encodedPassword = encodeURIComponent( password );
-    const newURL = `${url}?mail=${encodedEmail}&password=${encodedPassword}`;
   
     const xhr = new XMLHttpRequest, formData = new FormData;
     xhr.responseType = 'json';
@@ -36,15 +29,20 @@ const createRequest = ( options ) => {
     }
   
     if ( method === 'GET' ) {
+      const encodedEmail = encodeURIComponent( email );
+      const encodedPassword = encodeURIComponent( password );
+      const newURL = `${url}?mail=${encodedEmail}&password=${encodedPassword}`;
       xhr.open( 'GET', newURL );
       xhr.send();
     } else if ( method === 'POST' ) {
       formData.append( 'mail', email );
       formData.append( 'password', password );
-      xhr.open( 'POST', newURL );
+      xhr.open( 'POST', url );
       xhr.send( formData );   
     } else if ( method === 'DELETE' ) {
-      xhr.open( 'DELETE', newURL );
-      xhr.send();
+      formData.append( 'mail', email );
+      formData.append( 'password', password );
+      xhr.open( 'DELETE', url );
+      xhr.send( formData );
     }
   };
