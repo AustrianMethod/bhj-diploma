@@ -14,7 +14,10 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if ( !element ) throw new Error( 'передан пустой элемент' );
+    this.element = element;
+    this.registerEvents();
+    this.update();
   }
 
   /**
@@ -25,7 +28,20 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    const createAcc = document.querySelector( '.create-account' );
+    const accPanel = document.querySelector( '.accounts-panel' );
 
+    createAcc.addEventListener( 'click', ( e ) => {
+      e.preventDefault();
+      App.getModal( 'createAccount' );
+    })
+
+    accPanel.addEventListener( 'click', ( e ) => {
+      e.preventDefault();
+      if  ( e.target.closest( 'account' ) ) {
+        this.onSelectAccount( e.target.closest('account') )
+      };
+    })
   }
 
   /**
@@ -39,7 +55,14 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-
+    if ( User.current() ) {
+      const data = JSON.parse( User.current() );
+      Account.list( data, ( err, response ) => {
+        if ( response?.success ) {
+          this.clear();
+        }
+      }).forEach( e => this.renderItem( e ) );
+    }
   }
 
   /**
