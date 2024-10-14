@@ -71,7 +71,8 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-
+    const accElems = document.querySelectorAll('.sidebar-menu .account');
+    accElems.forEach( element => element.remove() );
   }
 
   /**
@@ -82,7 +83,13 @@ class AccountsWidget {
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
   onSelectAccount( element ) {
-
+    let prevElement = null;
+    if (prevElement) {
+      prevElement.classList.remove('.active')
+    }
+    element.classList.add('.active');
+    prevElement = element;
+    App.showPage( 'transactions', { account_id: element.account_id });
   }
 
   /**
@@ -91,7 +98,14 @@ class AccountsWidget {
    * item - объект с данными о счёте
    * */
   getAccountHTML(item){
-
+    const str = 
+     `<li class="active account" data-id="${item.id}">
+        <a href="#">
+          <span>${item.name}</span> /
+          <span>${item.sum}</span>
+        </a>
+      </li>`;
+    return str;
   }
 
   /**
@@ -101,6 +115,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(data){
-
+    this.element.insertAdjacentHTML('beforeend', this.getAccountHTML(data));
   }
 }
