@@ -28,9 +28,11 @@ class Modal {
     this.element.addEventListener('click', event => {
       event.preventDefault();
       console.log(event.target.dataset, event.target);
-      if(event.target.dataset.dismiss === 'modal') {
-        this.onClose(this.close());
+      if (event.target.dataset.dismiss === 'modal' || event.target.parentElement.dataset.dismiss === 'modal') {
+        this.onClose(this.element);
       };
+
+    
     })
   }
 
@@ -39,7 +41,7 @@ class Modal {
    * Закрывает текущее окно (Modal.close())
    * */
   onClose(e) {
-    e.close();
+    this.close();
   }
   /**
    * Открывает окно: устанавливает CSS-свойство display

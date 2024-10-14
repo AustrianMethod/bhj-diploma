@@ -17,6 +17,8 @@ const createRequest = ( options ) => {
     //       console.log( 'Данные:', response );
     //   }, 
     } = options;
+
+    console.log(callback)
   
     const xhr = new XMLHttpRequest, formData = new FormData;
     xhr.responseType = 'json';

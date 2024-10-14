@@ -41,7 +41,7 @@ class User {
       callback: ( err, response ) => {
         if (response?.success === true) {
           User.current();
-        } else if (response?.success === false) {
+        } else if (err?.success === false) {
           User.unsetCurrent();
         }
         callback(err, response);
