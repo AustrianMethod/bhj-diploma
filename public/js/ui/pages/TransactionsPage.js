@@ -1,3 +1,5 @@
+const { Transaction } = require("sequelize");
+
 /**
  * Класс TransactionsPage управляет
  * страницей отображения доходов и
@@ -39,9 +41,9 @@ class TransactionsPage {
       this.removeAccount();
     });
 
-    // removeTrBtn.addEventListener('click', () => {
-    //   this.removeTransaction();
-    // })
+    removeTrBtn.addEventListener('click', () => {
+      this.removeTransaction();
+    })
 
   }
 
@@ -55,8 +57,16 @@ class TransactionsPage {
    * для обновления приложения
    * */
   removeAccount() {
-    if (this.options) {
-      Account.remove();
+    if( this.lastOptions ) {
+      const userResponse = confirm('Вы действительно хотите удалить счёт?');
+      if( userResponse ) {
+        Account.remove( this.lastOptions.account_id, ( err, response ) => {
+          if ( response?.success ) {
+            App.updateForms();
+            App.updateWidgets();
+          };
+        });
+      }
     }
   }
 
@@ -67,7 +77,14 @@ class TransactionsPage {
    * либо обновляйте текущую страницу (метод update) и виджет со счетами
    * */
   removeTransaction( id ) {
-
+    const userResponse = confirm('Вы действительно хотите удалить счёт?');
+    if( userResponse ) {
+      Transaction.remove( id, ( err, response ) => {
+        if ( response?.success ) {
+          App.update();
+        }
+      });
+    }
   }
 
   /**
@@ -76,8 +93,8 @@ class TransactionsPage {
    * Получает список Transaction.list и полученные данные передаёт
    * в TransactionsPage.renderTransactions()
    * */
-  render(options){
-    if(options) {
+  render( options ){
+    if( options ) {
       this.lastOptions = options;
       const { account_id } = options;
       Account.get(account_id, ( err, response ) => {
