@@ -7,8 +7,8 @@ class CreateTransactionForm extends AsyncForm {
    * Вызывает родительский конструктор и
    * метод renderAccountsList
    * */
-  constructor(element) {
-    super(element); 
+  constructor( element ) {
+    super( element ); 
     this.renderAccountsList();
   }
 
@@ -18,7 +18,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     const accSelect = document.querySelector('.accounts-select');
-    Account.list( data, ( err, response ) => {
+    Account.list( {}, ( err, response ) => {
       if (response?.success) {
         accSelect.insertAdjacentHTML('beforeend', `
           <option value="${response.id}">${response.name}</option>

@@ -4,21 +4,14 @@
  * */
 const createRequest = ( options ) => {
     const {
-    url,
-    method,
-    callback,
-    data: {
-      email,
-      password,
-    } = {},
-    
-    //= ( err, response ) => {
-    //       console.log( 'Ошибка:', err );
-    //       console.log( 'Данные:', response );
-    //   }, 
+      url,
+      method,
+      callback,
+      data: {
+        email,
+        password,
+      } = {},
     } = options;
-
-    console.log(callback)
   
     const xhr = new XMLHttpRequest, formData = new FormData;
     xhr.responseType = 'json';

@@ -10,11 +10,11 @@ class Entity {
    * */
   static URL = '';
 
-  static list( data, callback ){
+  static list( { email = null, password = null } = {}, callback ){
     createRequest({
       url: this.URL,
-      data: data,
-      callback: callback(err, response),
+      data: { email, password },
+      callback: ( err, response ) => callback( err, response ),
       method: 'GET',
     });
   }
@@ -24,11 +24,11 @@ class Entity {
    * на сервер. (в зависимости от того,
    * что наследуется от Entity)
    * */
-  static create(data, callback) {
+  static create( { email = null, password = null } = {}, callback ) {
     createRequest({
       url: this.URL,
-      data: data,
-      callback: callback(err, response),
+      data: { email, password },
+      callback: ( err, response ) => callback( err, response ),
       method: 'PUT',
     });
   }
@@ -37,11 +37,11 @@ class Entity {
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove(data, callback ) {
+  static remove( { email = null, password = null } = {}, callback ) {
     createRequest({
       url: this.URL,
-      data: data,
-      callback: callback(err, response),
+      data: { email, password },
+      callback: ( err, response ) => callback( err, response ),
       method: 'DELETE',
     });
   }
