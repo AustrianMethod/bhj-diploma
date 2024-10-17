@@ -55,13 +55,14 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    if ( User.current() ) {
-      const data = JSON.parse( User.current() );
-      Account.list( data, ( err, response ) => {
+    if ( User.current() && User.current() !== 'undefined' ) {
+      console.log(User.current())
+      Account.list( {}, ( err, response ) => {
         if ( response?.success ) {
           this.clear();
+          console.log(response)
         }
-      }).forEach( e => this.renderItem( e ) );
+      })?.forEach( e => this.renderItem( e ) );
     }
   }
 

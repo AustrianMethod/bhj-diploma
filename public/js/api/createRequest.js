@@ -12,11 +12,14 @@ const createRequest = ( options ) => {
         password,
       } = {},
     } = options;
-  
+    
+    // console.log(options.data)
+
     const xhr = new XMLHttpRequest, formData = new FormData;
     xhr.responseType = 'json';
     xhr.onload = () => {
       if ( xhr.response.success ) {
+        console.log(xhr.response)
         callback( null, xhr.response );
       } else {
         callback( xhr.response )
@@ -32,6 +35,9 @@ const createRequest = ( options ) => {
     } else if ( method === 'POST' ) {
       formData.append( 'mail', email );
       formData.append( 'password', password );
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
       xhr.open( 'POST', url );
       xhr.send( formData );   
     } else if ( method === 'DELETE' ) {

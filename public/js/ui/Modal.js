@@ -26,12 +26,9 @@ class Modal {
    * */
   registerEvents() {
     this.element.addEventListener('click', event => {
-      event.preventDefault();
       if(event.target.dataset.dismiss === 'modal' || event.target.parentElement.dataset.dismiss === 'modal') {
         this.onClose();
       };
-
-    
     })
   }
 

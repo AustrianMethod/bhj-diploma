@@ -11,7 +11,7 @@ class User {
    * локальном хранилище.
    * */
   static setCurrent(user) {
-    localStorage.setItem('user', `${JSON.stringify(user)}`);
+    localStorage.setItem(user.name, `${JSON.stringify(user)}`);
   }
 
   /**
@@ -59,7 +59,7 @@ class User {
     createRequest({
       url: this.URL + '/login',
       method: 'POST',
-      data,
+      data: data,
       callback: (err, response) => {
         if (response && response.user) {
           this.setCurrent(response.user);
@@ -79,12 +79,15 @@ class User {
     createRequest({
       url: this.URL + '/register',
       method: 'POST',
-      data,
+      data: data,
       callback: (err, response) => {
         if (response.success === true) {
-          User.setCurrent();
+          console.log(data);
+          const newData = { ...data, id: response.user.id };
+          User.setCurrent(newData);
+          callback(err, response);
         }
-        callback(err, response);
+        
       },
     });
   }

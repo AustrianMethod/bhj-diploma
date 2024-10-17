@@ -37,26 +37,26 @@ class Sidebar {
   static initAuthLinks() {
     const regBtn = document.querySelector('.menu-item_register');
     const modalReg = App.getModal('register');
-    regBtn.onclick = (e) => {
+    regBtn.addEventListener( 'click', (e) => {
       e.preventDefault();
       modalReg.open();
-    };
+    });
 
     const loginBtn = document.querySelector('.menu-item_login');
     const modalLogin = App.getModal('login');
-    loginBtn.onclick = (e) => {
+    loginBtn.addEventListener( 'click', (e) => {
       e.preventDefault();
       modalLogin.open();
-    };
+    });
 
     const logoutBtn = document.querySelector('.menu-item_logout');
-    logoutBtn.onclick = (e) => {
+    logoutBtn.addEventListener( 'click', (e) => {
       e.preventDefault();
       User.logout( (err, response) => {
         if (response?.success === true) {
           App.setState('init');
         }
       });
-    };
+    });
   }
 }
